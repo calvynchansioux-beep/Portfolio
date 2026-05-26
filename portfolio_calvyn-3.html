@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calvyn Chansioux — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:      #0f1e3c;
+      --navy-mid:  #1a2f56;
+      --navy-lite: #243a68;
+      --gold:      #c9a227;
+      --gold-lt:   #e8c356;
+      --white:     #ffffff;
+      --off:       #f5f7fc;
+      --muted:     #8898b8;
+      --text:      #1c2b47;
+      --card:      #ffffff;
+      --border:    #e2e8f4;
+      --spain-red: #c60b1e;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(15,30,60,.95);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 3rem; height: 64px;
+      border-bottom: 1px solid rgba(201,162,39,.2);
+    }
+    .nav-brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); letter-spacing: .04em;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: .82rem;
+      font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      background: var(--navy);
+      display: grid; grid-template-columns: 1fr 1fr;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(circle at 20% 50%, rgba(201,162,39,.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(201,162,39,.05) 0%, transparent 40%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(201,162,39,.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(201,162,39,.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 3rem 80px 5rem;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .5rem;
+      border: 1px solid rgba(201,162,39,.4);
+      padding: .35rem .9rem; border-radius: 999px;
+      font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 2rem;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--gold); animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:.5; transform:scale(1.4); }
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--white); margin-bottom: 1rem;
+      animation: fadeUp .8s .1s ease both;
+    }
+    .hero-name span { color: var(--gold); display: block; }
+    .hero-tagline {
+      font-size: 1rem; color: var(--muted); line-height: 1.7;
+      max-width: 420px; margin-bottom: 2.5rem;
+      animation: fadeUp .8s .2s ease both;
+    }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: .6rem;
+      margin-bottom: 3rem;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-tag {
+      padding: .4rem 1rem; border-radius: 999px;
+      background: rgba(201,162,39,.12); color: var(--gold-lt);
+      font-size: .78rem; font-weight: 600; border: 1px solid rgba(201,162,39,.2);
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp .8s .4s ease both;
+    }
+    .btn-primary {
+      padding: .85rem 2rem; border-radius: 6px;
+      background: var(--gold); color: var(--navy);
+      font-weight: 700; font-size: .9rem; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,162,39,.4); }
+    .btn-outline {
+      padding: .85rem 2rem; border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.2); color: var(--white);
+      font-weight: 600; font-size: .9rem; text-decoration: none;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,162,39,.08); }
+
+    .hero-right {
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: flex-end; padding: 120px 5rem 80px 2rem;
+      position: relative; z-index: 1;
+    }
+    .hero-cards {
+      display: flex; flex-direction: column; gap: 1.2rem; width: 100%; max-width: 360px;
+    }
+    .hero-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; padding: 1.4rem 1.6rem;
+      animation: fadeUp .8s ease both;
+      transition: background .2s;
+    }
+    .hero-card:hover { background: rgba(255,255,255,.07); }
+    .hero-card:nth-child(1) { animation-delay: .2s; }
+    .hero-card:nth-child(2) { animation-delay: .35s; }
+    .hero-card:nth-child(3) { animation-delay: .5s; }
+    .hc-label {
+      font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .6rem;
+    }
+    .hc-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700; color: var(--white); margin-bottom: .2rem;
+    }
+    .hc-sub { font-size: .82rem; color: var(--muted); }
+    .hero-contact {
+      margin-top: 2rem; display: flex; flex-direction: column; gap: .5rem;
+      animation: fadeUp .8s .6s ease both;
+    }
+    .hero-contact a {
+      color: var(--muted); text-decoration: none; font-size: .85rem;
+      display: flex; align-items: center; gap: .5rem; transition: color .2s;
+    }
+    .hero-contact a:hover { color: var(--gold); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (max-width: 1024px) {
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 120px 2rem 40px; }
+      .hero-right { align-items: center; padding: 40px 2rem 80px; }
+    }
+
+    /* ─── GENERAL SECTIONS ─── */
+    section {
+      padding: 5rem 0;
+      position: relative;
+    }
+    .container {
+      max-width: 1200px; margin: 0 auto; padding: 0 3rem;
+    }
+    .section-eyebrow {
+      font-size: .75rem; font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .8rem;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .section-eyebrow,
+    .section-eyebrow.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700; line-height: 1.2; margin-bottom: 1.5rem;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease .1s;
+    }
+    .reveal.visible .section-title,
+    .section-title.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .section-desc {
+      color: var(--muted); font-size: 1.05rem; max-width: 600px;
+      line-height: 1.6; margin-bottom: 3rem;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease .2s;
+    }
+    .reveal.visible .section-desc,
+    .section-desc.visible {
+      opacity: 1; transform: translateY(0);
+    }
+
+    /* ─── EXPERIENCE ─── */
+    #experience {
+      background: var(--off);
+    }
+    .exp-timeline {
+      display: flex; flex-direction: column; gap: 3rem; margin-top: 3rem;
+    }
+    .exp-item {
+      display: grid; grid-template-columns: 140px 1fr;
+      gap: 2rem; opacity: 0; transform: translateY(20px);
+      transition: all .8s ease;
+    }
+    .reveal.visible .exp-item,
+    .exp-item.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .exp-item:nth-child(1) { transition-delay: .2s; }
+    .exp-item:nth-child(2) { transition-delay: .3s; }
+    .exp-item:nth-child(3) { transition-delay: .4s; }
+    .exp-period {
+      font-size: .9rem; font-weight: 600; color: var(--gold);
+      line-height: 1.4;
+    }
+    .exp-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem; position: relative;
+    }
+    .exp-card::before {
+      content: ''; position: absolute; left: -70px; top: 24px;
+      width: 16px; height: 16px; border-radius: 50%;
+      background: var(--gold); border: 3px solid var(--off);
+    }
+    .exp-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700; color: var(--text);
+      margin-bottom: .3rem;
+    }
+    .exp-company {
+      color: var(--muted); font-size: .95rem; margin-bottom: 1rem;
+    }
+    .exp-desc {
+      color: var(--muted); line-height: 1.7; font-size: .95rem;
+    }
+    .exp-tags {
+      display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.2rem;
+    }
+    .exp-tag {
+      font-size: .75rem; padding: .35rem .8rem; border-radius: 999px;
+      background: rgba(201,162,39,.12); color: var(--gold-lt); font-weight: 600;
+    }
+
+    /* ─── COMPÉTENCES ─── */
+    #competences {
+      padding: 5rem 0;
+    }
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .skill-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .skill-card,
+    .skill-card.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .skill-card:nth-child(1) { transition-delay: .1s; }
+    .skill-card:nth-child(2) { transition-delay: .2s; }
+    .skill-card:nth-child(3) { transition-delay: .3s; }
+    .skill-card:nth-child(4) { transition-delay: .4s; }
+    .skill-icon {
+      font-size: 2.5rem; margin-bottom: 1rem;
+    }
+    .skill-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: .8rem;
+    }
+    .skill-items {
+      display: flex; flex-direction: column; gap: .6rem;
+    }
+    .skill-item {
+      color: var(--muted); font-size: .9rem; line-height: 1.5;
+      display: flex; align-items: flex-start; gap: .6rem;
+    }
+    .skill-item::before {
+      content: '→'; color: var(--gold); font-weight: 700; flex-shrink: 0;
+    }
+
+    /* ─── FORMATION ─── */
+    #formation {
+      background: var(--off);
+    }
+    .formation-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem; margin-top: 3rem; margin-bottom: 3rem;
+    }
+    .formation-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .formation-card,
+    .formation-card.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .formation-card:nth-child(1) { transition-delay: .1s; }
+    .formation-card:nth-child(2) { transition-delay: .2s; }
+    .fc-header {
+      background: var(--navy);
+      color: var(--white);
+      padding: 2rem;
+    }
+    .fc-badge {
+      display: inline-block; background: rgba(201,162,39,.2);
+      color: var(--gold-lt); padding: .3rem .8rem; border-radius: 999px;
+      font-size: .7rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .fc-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700; margin-bottom: .3rem;
+    }
+    .fc-sub {
+      color: var(--muted); font-size: .9rem;
+    }
+    .fc-body {
+      padding: 2rem;
+    }
+    .fc-where {
+      color: var(--gold); font-weight: 600; font-size: .9rem;
+      margin-bottom: .3rem;
+    }
+    .fc-period {
+      color: var(--muted); font-size: .85rem; margin-bottom: 1.2rem;
+    }
+    .fc-highlights {
+      display: flex; flex-direction: column; gap: .8rem;
+    }
+    .fc-hl {
+      color: var(--muted); font-size: .9rem; line-height: 1.6;
+      padding-left: 1.2rem; position: relative;
+    }
+    .fc-hl::before {
+      content: ''; position: absolute; left: 0; top: .4rem;
+      width: 4px; height: 4px; border-radius: 50%; background: var(--gold);
+    }
+
+    /* ─── INTÉRÊTS ─── */
+    #interets {
+      padding: 5rem 0;
+    }
+    .interests-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .interest-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2.2rem; text-align: center;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .interest-card,
+    .interest-card.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .interest-card:nth-child(1) { transition-delay: .1s; }
+    .interest-card:nth-child(2) { transition-delay: .2s; }
+    .interest-icon {
+      font-size: 3rem; margin-bottom: 1rem;
+    }
+    .interest-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700; margin-bottom: .8rem;
+    }
+    .interest-desc {
+      color: var(--muted); font-size: .9rem; line-height: 1.6;
+    }
+
+    /* ─── OBJECTIFS ─── */
+    #objectifs {
+      background: var(--off);
+    }
+    .goals-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .goal-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 2rem;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+      position: relative;
+    }
+    .reveal.visible .goal-card,
+    .goal-card.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .goal-card:nth-child(1) { transition-delay: .1s; }
+    .goal-card:nth-child(2) { transition-delay: .2s; }
+    .goal-card:nth-child(3) { transition-delay: .3s; }
+    .goal-card:nth-child(4) { transition-delay: .4s; }
+    .goal-num {
+      position: absolute; top: 2rem; right: 2rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem; font-weight: 700; color: rgba(201,162,39,.15);
+    }
+    .goal-icon {
+      font-size: 2.2rem; margin-bottom: .8rem;
+    }
+    .goal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);
+    }
+    .goal-desc {
+      color: var(--muted); font-size: .9rem; line-height: 1.6; margin-bottom: 1.5rem;
+    }
+    .goal-horizon {
+      display: inline-block; background: rgba(201,162,39,.12);
+      color: var(--gold-lt); padding: .3rem .8rem; border-radius: 999px;
+      font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    /* ─── TESTIMONIAL ─── */
+    #testimonial {
+      padding: 5rem 0;
+    }
+    .testimonial-inner {
+      max-width: 800px; margin: 0 auto;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .testimonial-inner,
+    .testimonial-inner.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .testimonial-content {
+      background: var(--off); border: 1px solid var(--border);
+      border-radius: 12px; padding: 3rem; text-align: center;
+    }
+    blockquote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-style: italic; color: var(--text);
+      line-height: 1.7; margin-bottom: 1.5rem;
+    }
+    cite {
+      color: var(--muted); font-style: normal; font-size: .9rem;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      background: var(--navy); color: var(--white);
+      padding: 6rem 0;
+    }
+    .contact-inner {
+      max-width: 800px; margin: 0 auto; text-align: center;
+      opacity: 0; transform: translateY(20px); transition: all .8s ease;
+    }
+    .reveal.visible .contact-inner,
+    .contact-inner.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    #contact .section-title { color: var(--white); }
+    .contact-sub {
+      color: var(--muted); font-size: 1.05rem; line-height: 1.6;
+      margin-bottom: 3rem;
+    }
+    .contact-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem; margin-bottom: 2rem;
+    }
+    .contact-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 12px; padding: 1.8rem; text-decoration: none;
+      color: var(--white); transition: all .3s;
+      display: flex; flex-direction: column; align-items: center;
+    }
+    .contact-card:hover {
+      border-color: var(--gold); background: rgba(201,162,39,.1);
+    }
+    .cc-icon {
+      font-size: 2rem; margin-bottom: .8rem;
+    }
+    .cc-label {
+      font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: .4rem;
+    }
+    .cc-val {
+      font-size: .9rem; font-weight: 600;
+    }
+    .contact-alt {
+      color: var(--muted); font-size: .9rem;
+    }
+    .contact-alt span {
+      color: var(--gold-lt); font-weight: 600;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-mid); color: var(--muted);
+      text-align: center; padding: 2rem 0;
+      font-size: .85rem; border-top: 1px solid rgba(201,162,39,.1);
+    }
+    footer span { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 1.5rem; }
+      .nav-links { gap: 1rem; }
+      .container { padding: 0 1.5rem; }
+      section { padding: 3rem 0; }
+      .exp-item { grid-template-columns: 1fr; }
+      .exp-item::before { left: 0; }
+      .exp-card::before { left: -40px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">Calvyn <span>Chansioux</span></div>
+    <ul class="nav-links">
+      <li><a href="#experience">Expérience</a></li>
+      <li><a href="#competences">Compétences</a></li>
+      <li><a href="#formation">Formation</a></li>
+      <li><a href="#interets">Intérêts</a></li>
+      <li><a href="#objectifs">Objectifs</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-pattern"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-left">
+      <div class="hero-badge">Étudiant en BUT — Candidat alternance 2026</div>
+      <h1 class="hero-name">Calvyn <span>Chansioux</span></h1>
+      <p class="hero-tagline">Commerce international · Achats stratégiques · Développement commercial</p>
+      <div class="hero-tags">
+        <span class="hero-tag">🌐 International</span>
+        <span class="hero-tag">📊 Achats</span>
+        <span class="hero-tag">💼 Commercial</span>
+      </div>
+      <div class="hero-ctas">
+        <a href="mailto:calvynchansioux@gmail.com" class="btn-primary">Me contacter</a>
+        <a href="https://www.linkedin.com/in/calvyn-chansioux" target="_blank" class="btn-outline">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-cards">
+        <div class="hero-card">
+          <div class="hc-label">Formation</div>
+          <div class="hc-value">BUT TC</div>
+          <div class="hc-sub">Techniques de Commercialisation</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-label">Spécialité</div>
+          <div class="hc-value">Achat & Vente</div>
+          <div class="hc-sub">Business International</div>
+        </div>
+        <div class="hero-card">
+          <div class="hc-label">Langues</div>
+          <div class="hc-value">3 langues</div>
+          <div class="hc-sub">FR · EN · ES</div>
+        </div>
+      </div>
+      <div class="hero-contact">
+        <a href="mailto:calvynchansioux@gmail.com">✉️ calvynchansioux@gmail.com</a>
+        <a href="tel:+33614463177">📞 +33 6 14 46 31 77</a>
+        <a href="https://www.linkedin.com/in/calvyn-chansioux" target="_blank">💼 Calvyn Chansioux</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-eyebrow reveal">Mon parcours professionnel</div>
+      <h2 class="section-title reveal">Expérience</h2>
+      <p class="section-desc reveal">Plusieurs stages et expériences en entreprise pour ancrer ma formation dans la pratique commerciale, internationale et en achats.</p>
+      <div class="exp-timeline">
+        <div class="exp-item reveal">
+          <div class="exp-period">
+            Jan. – Fév. 2026<br/><strong>Mobile Minute</strong>
+          </div>
+          <div class="exp-card">
+            <div class="exp-title">Stage Achats &amp; Supply Chain</div>
+            <div class="exp-company">Mobile Minute — La Rochelle</div>
+            <div class="exp-desc">Gestion des achats de matériel informatique auprès de fournisseurs en France et à l'international. Sélection et comparaison des fournisseurs (prix, qualité, délais), suivi des commandes et coordination logistique, négociation des conditions commerciales.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">Achat</span>
+              <span class="exp-tag">Supply Chain</span>
+              <span class="exp-tag">Fournisseurs</span>
+              <span class="exp-tag">International</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-period">
+            Mai – Juin 2025<br/><strong>Optim'home énergie</strong>
+          </div>
+          <div class="exp-card">
+            <div class="exp-title">Stage Commercial — Salon</div>
+            <div class="exp-company">Optim'home énergie — Foire Internationale de Bordeaux</div>
+            <div class="exp-desc">Prospection directe des visiteurs, création de flux et animation du stand, présentation commerciale de solutions énergétiques en B2C lors d'un salon professionnel majeur.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">Prospection</span>
+              <span class="exp-tag">Commercial</span>
+              <span class="exp-tag">B2C</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-period">
+            Juin – Août 2025<br/><strong>Solutionbike</strong>
+          </div>
+          <div class="exp-card">
+            <div class="exp-title">Stage International</div>
+            <div class="exp-company">Solutionbike — Valence, Espagne</div>
+            <div class="exp-desc">Accueil des clients locaux et touristes internationaux dans une entreprise de location de vélos, gestion des contrats de location, médiation et facilitation des échanges multiculturels, soutien administratif.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">International</span>
+              <span class="exp-tag">Espagne</span>
+              <span class="exp-tag">Tourisme</span>
+              <span class="exp-tag">Multilingue</span>
+            </div>
+          </div>
+        </div>
+        <div class="exp-item reveal">
+          <div class="exp-period">
+            Janvier 2025<br/><strong>IAD France</strong>
+          </div>
+          <div class="exp-card">
+            <div class="exp-title">Stage Accompagnement — 4 semaines</div>
+            <div class="exp-company">IAD France — La Rochelle</div>
+            <div class="exp-desc">Accompagnement d'une conseillère immobilière indépendante, prospection physique et digitale, prise en main d'outils de gestion client et approche entrepreneuriale.</div>
+            <div class="exp-tags">
+              <span class="exp-tag">Prospection</span>
+              <span class="exp-tag">Entrepreneuriat</span>
+              <span class="exp-tag">CRM</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPÉTENCES -->
+  <section id="competences">
+    <div class="container">
+      <div class="section-eyebrow reveal">Mes savoirs et savoir-faire</div>
+      <h2 class="section-title reveal">Compétences</h2>
+      <p class="section-desc reveal">Une combinaison de compétences commerciales, techniques et interculturelles développées en formation et en entreprise.</p>
+      <div class="skills-grid">
+        <div class="skill-card reveal">
+          <div class="skill-icon">💼</div>
+          <div class="skill-title">Commerce &amp; Prospection</div>
+          <div class="skill-items">
+            <div class="skill-item">Prospection commerciale (digitale &amp; terrain)</div>
+            <div class="skill-item">Relation client &amp; communication</div>
+            <div class="skill-item">Négociation commerciale et tarifaire</div>
+            <div class="skill-item">Présentation commerciale de solutions</div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">📦</div>
+          <div class="skill-title">Achats &amp; Supply Chain</div>
+          <div class="skill-items">
+            <div class="skill-item">Gestion des achats fournisseurs</div>
+            <div class="skill-item">Sélection et comparaison fournisseurs</div>
+            <div class="skill-item">Suivi des commandes et coordination logistique</div>
+            <div class="skill-item">Sourcing national et international</div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">💻</div>
+          <div class="skill-title">Outils &amp; Techniques</div>
+          <div class="skill-items">
+            <div class="skill-item">Pack Office (Excel, Word, PowerPoint)</div>
+            <div class="skill-item">Analyse de données commerciales (reporting)</div>
+            <div class="skill-item">Outils de gestion client &amp; CRM</div>
+            <div class="skill-item">Gestion administrative et logistique</div>
+          </div>
+        </div>
+        <div class="skill-card reveal">
+          <div class="skill-icon">🌐</div>
+          <div class="skill-title">Langues &amp; Soft Skills</div>
+          <div class="skill-items">
+            <div class="skill-item">Français — Natif</div>
+            <div class="skill-item">Anglais — Niveau C1</div>
+            <div class="skill-item">Espagnol — Niveau B1</div>
+            <div class="skill-item">Esprit critique, leadership, créativité</div>
+            <div class="skill-item">Travail en équipe, flexibilité</div>
+            <div class="skill-item">Aisance multiculturelle</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMATION -->
+  <section id="formation">
+    <div class="container">
+      <div class="section-eyebrow reveal">Mon parcours académique</div>
+      <h2 class="section-title reveal">Formation</h2>
+      <p class="section-desc reveal">Une formation technique et commerciale solide, combinant théorie académique et immersion en entreprise à travers de nombreux stages et projets.</p>
+      <div class="formation-grid">
+        <div class="formation-card reveal">
+          <div class="fc-header">
+            <div class="fc-badge">En cours · Depuis 2024</div>
+            <div class="fc-title">BUT Techniques de Commercialisation</div>
+            <div class="fc-sub">Business International : Achat et Vente</div>
+          </div>
+          <div class="fc-body">
+            <div class="fc-where">Université de Bordeaux — IUT de Bordeaux</div>
+            <div class="fc-period">Depuis septembre 2024 · 3 ans</div>
+            <div class="fc-highlights">
+              <div class="fc-hl">Formation spécialisée en commerce international avec des cours de vente, achat, marketing, communication, gestion et langues étrangères.</div>
+              <div class="fc-hl">Nombreux projets SAé (Situations d'Apprentissage et Évaluation) en conditions réelles : vente, communication, marketing, découverte internationale.</div>
+              <div class="fc-hl">Rythme intégrant régulièrement des stages et des périodes en entreprise pour ancrer les apprentissages dans la pratique.</div>
+            </div>
+          </div>
+        </div>
+        <div class="formation-card reveal">
+          <div class="fc-header" style="background:var(--navy-lite)">
+            <div class="fc-badge">Obtenu · 2023</div>
+            <div class="fc-title">Baccalauréat STI2D</div>
+            <div class="fc-sub">mention Bien — Sciences et Technologies de l'Industrie et du Développement Durable</div>
+          </div>
+          <div class="fc-body">
+            <div class="fc-where">Lycée Léonce Vieljeux — La Rochelle</div>
+            <div class="fc-period">2020 – 2023 · 3 ans</div>
+            <div class="fc-highlights">
+              <div class="fc-hl">Baccalauréat technologique axé sur l'industrie, l'innovation et le développement durable, obtenu avec mention Bien.</div>
+              <div class="fc-hl">Développement de compétences analytiques, scientifiques et de résolution de problèmes complexes.</div>
+              <div class="fc-hl">Pratique intensive du football en sport-études pendant 4 ans : discipline, esprit d'équipe, dépassement de soi et gestion de l'effort physique.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTÉRÊTS -->
+  <section id="interets">
+    <div class="container">
+      <div class="section-eyebrow reveal">Au-delà du professionnel</div>
+      <h2 class="section-title reveal">Centres d'intérêt</h2>
+      <p class="section-desc reveal">Mes passions reflètent ma personnalité : sportif engagé et créatif en quête d'expression artistique.</p>
+      <div class="interests-grid">
+        <div class="interest-card reveal">
+          <div class="interest-icon">⚽</div>
+          <div class="interest-title">Football</div>
+          <div class="interest-desc">12 ans de pratique en club de football compétitif. Discipline, esprit d'équipe, dépassement personnel et gestion de la pression — des valeurs qui structurent mon approche professionnelle.</div>
+        </div>
+        <div class="interest-card reveal">
+          <div class="interest-icon">🎵</div>
+          <div class="interest-title">Production Musicale</div>
+          <div class="interest-desc">Passionné par la création musicale et la production. Un domaine qui nourrit ma créativité, ma rigueur artistique et mon goût pour l'innovation technique et sonore.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OBJECTIFS -->
+  <section id="objectifs">
+    <div class="container">
+      <div class="section-eyebrow reveal">Ma vision</div>
+      <h2 class="section-title reveal">Objectifs &amp; Ambitions</h2>
+      <p class="section-desc reveal">Tourné vers l'international depuis le début de mon parcours, je construis chaque expérience en cohérence avec un projet professionnel clair et ambitieux.</p>
+      <div class="goals-grid">
+        <div class="goal-card reveal">
+          <div class="goal-num">01</div>
+          <div class="goal-icon">📦</div>
+          <h3 class="goal-title">Trouver une alternance dans le domaine des achats ou à dimension internationale</h3>
+          <p class="goal-desc">Rejoindre une entreprise avec une vision achats stratégiques ou une dimension internationale dès septembre 2026, dans un rôle commercial, achats ou business development. Je suis mobile et prêt à m'engager dans un environnement exigeant.</p>
+          <span class="goal-horizon">Septembre 2026</span>
+        </div>
+        <div class="goal-card reveal">
+          <div class="goal-num">02</div>
+          <div class="goal-icon">🎓</div>
+          <h3 class="goal-title">Intégrer un Master spécialisé en achat</h3>
+          <p class="goal-desc">Après mon BUT Techniques de Commercialisation, poursuivre vers un Master spécialisé en achat, commerce international ou supply chain pour approfondir ma spécialisation et accélérer mon évolution professionnelle.</p>
+          <span class="goal-horizon">2027 – 2028</span>
+        </div>
+        <div class="goal-card reveal">
+          <div class="goal-num">03</div>
+          <div class="goal-icon">📈</div>
+          <h3 class="goal-title">Devenir expert en achats stratégiques</h3>
+          <p class="goal-desc">Me spécialiser en achats stratégiques, sourcing international et supply chain management. Viser une évolution vers des postes à responsabilité dans l'achat ou le développement commercial à l'international.</p>
+          <span class="goal-horizon">À moyen terme</span>
+        </div>
+        <div class="goal-card reveal">
+          <div class="goal-num">04</div>
+          <div class="goal-icon">✈️</div>
+          <h3 class="goal-title">Construire une carrière internationale</h3>
+          <p class="goal-desc">Mettre mes compétences multilingues (FR / EN / ES) et mon aisance interculturelle au service d'une carrière durable à l'international, en achats, commerce ou business development.</p>
+          <span class="goal-horizon">Objectif à long terme</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonial">
+    <div class="container">
+      <div class="testimonial-inner reveal">
+        <div class="testimonial-content">
+          <blockquote>
+            « Calvyn apporte une vraie curiosité commerciale et une capacité d'adaptation remarquable. Son autonomie en prospection et sa rigueur dans la gestion d'achats font de lui un professionnel en devenir complet. »
+          </blockquote>
+          <cite>— Expérience Achat &amp; Supply Chain</cite>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-inner reveal">
+        <div class="section-eyebrow" style="color:var(--gold-lt)">Travaillons ensemble</div>
+        <h2 class="section-title">Me contacter</h2>
+        <p class="contact-sub">Je suis à la recherche d'une alternance pour septembre 2026. N'hésitez pas à me contacter pour échanger sur mon profil.</p>
+        <div class="contact-cards">
+          <a href="mailto:calvynchansioux@gmail.com" class="contact-card">
+            <div class="cc-icon">✉️</div>
+            <div class="cc-label">Email</div>
+            <div class="cc-val">calvynchansioux@gmail.com</div>
+          </a>
+          <a href="tel:+33614463177" class="contact-card">
+            <div class="cc-icon">📞</div>
+            <div class="cc-label">Téléphone</div>
+            <div class="cc-val">+33 6 14 46 31 77</div>
+          </a>
+          <a href="https://www.linkedin.com/in/calvyn-chansioux" target="_blank" class="contact-card">
+            <div class="cc-icon">💼</div>
+            <div class="cc-label">LinkedIn</div>
+            <div class="cc-val">Calvyn Chansioux</div>
+          </a>
+          <div class="contact-card">
+            <div class="cc-icon">📍</div>
+            <div class="cc-label">Localisation</div>
+            <div class="cc-val">Bordeaux, 33000</div>
+          </div>
+        </div>
+        <p class="contact-alt">Rythme d'alternance : <span>2 semaines entreprise / 2 semaines école</span> · Disponible dès <span>septembre 2026</span></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 <span>Calvyn Chansioux</span> · Portfolio BUT Techniques de Commercialisation · IUT de Bordeaux</p>
+  </footer>
+
+  <script>
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 60);
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // Nav highlight on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 100) cur = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + cur ? 'var(--gold)' : '';
+      });
+    });
+  </script>
+</body>
+</html>
